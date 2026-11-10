@@ -1,0 +1,3 @@
+boundary,source_file,feature_count,crs,geometry_types,is_valid,area_km2_utm45n,min_longitude,min_latitude,max_longitude,max_latitude
+main_basin,Subernarekha_Main_Basin_CWC.geojson,1,EPSG:4326,MultiPolygon,True,26703.476255104215,85.13728893685422,21.2760334378207,87.55428846015955,23.54979132995645
+subbasin,Subernarekha_Subbasin.geojson,1,EPSG:4326,Polygon,True,26787.694713008117,85.13728904685962,21.27603340157731,87.56020147266723,23.549791336153636
