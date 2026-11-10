@@ -5,6 +5,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 steps = [
     "audit_data.py",
+    "spatial_analysis.py",
     "integrate_data.py",
     "detect_anomalies.py",
     "make_maps.py",
