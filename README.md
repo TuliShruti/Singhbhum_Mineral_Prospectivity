@@ -11,6 +11,13 @@ This repository is a reproducible **first-stage analysis** of the NGDR data curr
 The first experiment is **geophysical anomaly detection and spatial association with known copper occurrences**.
 It is **not yet a validated supervised copper prospectivity model** and it does not claim to map the whole Subarnarekha River Basin.
 
+The pipeline now also validates the supplied CWC basin geometry and writes
+spatial coverage and occurrence-to-station distance reports. Basin containment
+summaries do not imply continuous survey coverage or validate the scientific
+fitness of the boundary source. See
+[`reports/SINGHBHUM_COPPER_BELT_GEOLOGY.md`](reports/SINGHBHUM_COPPER_BELT_GEOLOGY.md)
+for a cited geological overview and interpretation limits.
+
 ## Important verified data facts
 
 - Gravity: 764 raw rows, 523 unique coordinate pairs.
@@ -19,18 +26,39 @@ It is **not yet a validated supervised copper prospectivity model** and it does 
 - Gravity raw coordinates span approximately 86.252–86.499°E and 22.253–22.999°N.
 - Magnetic coordinates span approximately 86.256–86.499°E and 22.253–22.499°N.
 - The integrated station footprint therefore follows the smaller magnetic footprint.
-- The Purbi Singhbhum copper file contains 14 records. Only 2 are within 1 km of a magnetic station; 7 are within 5 km. Distances are calculated in UTM zone 45N.
+- The Purbi Singhbhum copper file contains 14 records. The spatial step recomputes distances from unique exact station coordinates in UTM zone 45N; use its generated summary as the current result because older checked-in distance outputs disagree.
 - The 73F09 Galudih record is approximately 62.7 km from the nearest magnetic station and 53.3 km from the nearest gravity station. It is retained separately and excluded from the core spatial association analysis.
 - Repeated coordinate records exist in both geophysical downloads. The pipeline aggregates at coordinate precision 5 decimal places and preserves record counts and variability statistics rather than silently discarding repeats.
 
 ## What the ML output means
 
-The starter pipeline applies:
+The canonical `src/run_pipeline.py` pipeline applies:
 1. Data validation and duplicate-aware spatial aggregation.
-2. Exact coordinate matching of gravity and magnetic stations.
-3. Isolation Forest anomaly detection using magnetic anomaly, Bouguer anomaly and elevation.
-4. PCA for exploratory visualization.
-5. A station-point map with copper occurrences overlaid.
+2. Basin geometry and coverage validation, including separation of the distant Galudih occurrence.
+3. Duplicate-aware gravity/magnetic integration using five-decimal coordinate keys, retaining only shared stations covered by the main basin boundary.
+4. Isolation Forest anomaly detection using magnetic anomaly, Bouguer anomaly and elevation.
+5. PCA for exploratory visualization.
+6. A station-point map with Purbi copper occurrences overlaid.
+
+The `src/spatial_analysis.py` step checks CRS and geometry validity
+for each CWC boundary, reports the subbasin/main-basin relationship, counts raw
+and unique gravity/magnetic locations inside each boundary, summarizes station
+spacing, and recomputes copper-to-nearest-station distances from the source
+coordinates. Invalid geometries stop the pipeline and are not silently fixed.
+Distance and area metrics use EPSG:32645 (UTM zone 45N). The analysis step
+writes `reports/basin_geometry_validation.csv`,
+`reports/basin_boundary_summary.csv`, `reports/basin_overlap_summary.csv`, `reports/station_coverage_summary.csv`,
+`reports/copper_station_distance_summary.csv`,
+`data/outputs/basin_membership_validated.csv`, and
+`data/outputs/copper_nearest_station_distances_validated.csv`.
+
+The canonical integrated file has the 24-column schema used by the anomaly and
+mapping scripts. The integration step groups source records by five-decimal
+coordinate keys, performs an inner gravity/magnetic join, and then retains only
+matched points covered by the validated main-basin polygon. The spatial distance
+report instead uses unique exact coordinate pairs so repeated source records do
+not weight nearest-station distances. The Galudih (73F09) point remains a
+separate comparison and is excluded from the Purbi overlay and core integration.
 
 An Isolation Forest outlier is a **geophysical outlier relative to this dataset**. It is not proof of copper mineralisation. The anomaly score is a screening aid, not a probability of finding copper.
 
@@ -72,6 +100,9 @@ python src/run_pipeline.py
 
 5. Inspect:
    - `reports/data_audit_summary.csv`
+   - `reports/station_coverage_summary.csv`
+   - `reports/copper_station_distance_summary.csv`
+   - `reports/integration_quality_report.csv`
    - `data/processed/integrated_geophysical.csv`
    - `data/outputs/copper_occurrence_nearest_station_distances.csv`
    - `data/outputs/isolation_forest_anomaly_scores.csv`
@@ -85,4 +116,4 @@ python src/run_pipeline.py
 - Do not interpolate beyond the data footprint. Do not interpret a point anomaly as a mineral deposit.
 - The 73F09 occurrence must not be included in the core model without a spatial-coverage justification.
 - Obtain additional verified occurrences and a defensible background/absence sampling strategy before supervised prospectivity modelling.
-- Geological, geochemical and basin-boundary layers remain missing. The current work is a constrained geophysical pilot, not the full multi-source framework in the original proposal.
+- Geological and geochemical map layers remain missing. CWC basin boundary files are present, but their provenance and suitability for the intended study area still require confirmation. The current work is a constrained geophysical pilot, not the full multi-source framework in the original proposal.

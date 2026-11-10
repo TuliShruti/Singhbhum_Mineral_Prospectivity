@@ -1,0 +1,3 @@
+dataset,raw_records,unique_station_sites_exact_coordinates,duplicate_records,inside_main_basin_raw,outside_main_basin_raw,inside_main_basin_unique,inside_main_basin_unique_percent,inside_subbasin_raw,outside_subbasin_raw,inside_subbasin_unique,inside_subbasin_unique_percent,min_longitude,max_longitude,min_latitude,max_latitude,nearest_neighbor_median_km,nearest_neighbor_p95_km,nearest_neighbor_max_km
+gravity,764,523,241,628,136,387,73.9961759082218,628,136,387,73.9961759082218,86.25198,86.49903,22.25251,22.99944,1.330033384694246,1.660524911148899,2.2364449584764126
+magnetic,526,286,240,526,0,286,100.0,526,0,286,100.0,86.25565,86.49903,22.25251,22.49878,1.3475737077210757,1.5460648238747396,1.90790287622075

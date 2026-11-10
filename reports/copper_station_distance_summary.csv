@@ -1,0 +1,5 @@
+occurrence_dataset,station_dataset,occurrence_count,nearest_distance_km,median_distance_km,maximum_distance_km,within_1km,within_5km,within_10km,within_25km
+copper_73F09,gravity,1,53.3304623698941,53.3304623698941,53.3304623698941,0,0,0,0
+copper_73F09,magnetic,1,62.667516941131495,62.667516941131495,62.667516941131495,0,0,0,0
+copper_purbi,gravity,14,0.568511882129214,5.870440519545797,21.114230805143826,2,6,12,14
+copper_purbi,magnetic,14,0.568511882129214,11.424430319966937,24.905393348901374,2,5,7,14
