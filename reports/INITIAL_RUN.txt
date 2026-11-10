@@ -1,0 +1,66 @@
+
+===== Running audit_data.py =====
+DATA AUDIT COMPLETE
+     dataset  raw_records  unique_coordinate_pairs  duplicate_coordinate_rows   min_lon   max_lon   min_lat   max_lat
+     gravity          764                      523                        241 86.251980 86.499030 22.252510 22.999440
+    magnetic          526                      286                        240 86.255650 86.499030 22.252510 22.498780
+copper_purbi           14                       14                          0 86.216667 86.701563 22.279109 22.716667
+copper_73F09            1                        1                          0 85.732749 85.732749 22.783172 22.783172
+
+Unique common gravity/magnetic coordinates: 286
+Purbi copper records within 1 km of magnetic stations: 2 / 14
+Purbi copper records within 5 km of magnetic stations: 5 / 14
+
+Nearest distances (km):
+        locality  nearest_gravity_distance_km  nearest_magnetic_distance_km
+           Badia                         0.57                          0.57
+      Baharagora                        21.11                         21.11
+       Bayanbill                         5.93                         22.95
+       Kanyaluka                         2.26                          2.26
+        Kendadih                         9.80                          9.80
+     Mainajharia                         0.57                          0.57
+        Mosaboni                         2.51                          2.51
+          Nandup                         4.90                         24.52
+      Pathargora                         4.49                          4.49
+          Rajdah                         7.81                         21.01
+Ramchandra Pahar                         5.81                         24.91
+       Sideshwar                        13.05                         13.05
+           Surda                         6.30                          6.30
+       Tamapahar                         8.17                         21.15
+
+73F09 occurrence:
+locality  nearest_gravity_distance_km  nearest_magnetic_distance_km
+ Galudih                        53.33                         62.67
+
+===== Running integrate_data.py =====
+Integrated geophysical dataset: (286, 24)
+Columns: ['longitude_key_5dp', 'latitude_key_5dp', 'magnetic_record_count', 'magnetic_toposheets', 'observed_magnetic_nt_mean', 'igrf_reference_nt_mean', 'magnetic_anomaly_nt_mean', 'magnetic_anomaly_nt_std', 'magnetic_anomaly_nt_min', 'magnetic_anomaly_nt_max', 'longitude', 'latitude', 'gravity_record_count', 'gravity_toposheets', 'elevation_mean', 'elevation_std', 'observed_gravity_mean', 'theoretical_gravity_mean', 'bouguer_anomaly_mean', 'bouguer_anomaly_std', 'bouguer_anomaly_min', 'bouguer_anomaly_max', 'coordinate_system', 'join_rule']
+ longitude_key_5dp  latitude_key_5dp  magnetic_record_count magnetic_toposheets  observed_magnetic_nt_mean  igrf_reference_nt_mean  magnetic_anomaly_nt_mean  magnetic_anomaly_nt_std  magnetic_anomaly_nt_min  magnetic_anomaly_nt_max  longitude  latitude  gravity_record_count gravity_toposheets  elevation_mean  elevation_std  observed_gravity_mean  theoretical_gravity_mean  bouguer_anomaly_mean  bouguer_anomaly_std  bouguer_anomaly_min  bouguer_anomaly_max coordinate_system                                                    join_rule
+          86.25565          22.28045                      2              73J/07                45833.96174             45833.32818                  0.633565             5.303301e-08                 0.633565                 0.633565   86.25565  22.28045                     2             73J/07           337.0       0.000000               978694.0                  978775.0                 -15.0                  0.0                -15.0                -15.0         EPSG:4326 Inner join on longitude/latitude rounded to 5 decimal places
+          86.25638          22.29778                      2              73J/07                45993.83264             45841.17209                152.660543             2.828427e-07               152.660543               152.660543   86.25638  22.29778                     2             73J/07           373.0       1.414214               978691.0                  978776.0                 -13.0                  0.0                -13.0                -13.0         EPSG:4326 Inner join on longitude/latitude rounded to 5 decimal places
+          86.25692          22.41020                      2              73J/07                45968.22394             45898.42868                 69.795258             3.394112e-07                69.795258                69.795258   86.25692  22.41020                     2             73J/07           325.0       0.000000               978705.0                  978784.0                 -15.0                  0.0                -15.0                -15.0         EPSG:4326 Inner join on longitude/latitude rounded to 5 decimal places
+          86.25696          22.27088                      2              73J/07                46013.22658             45829.24989                183.976685             2.828427e-07               183.976685               183.976685   86.25696  22.27088                     2             73J/07           314.0       0.000000               978695.0                  978775.0                 -19.0                  0.0                -19.0                -19.0         EPSG:4326 Inner join on longitude/latitude rounded to 5 decimal places
+          86.25696          22.31151                      2              73J/07                45777.06839             45849.39950                -72.331109             1.202081e-07               -72.331109               -72.331109   86.25696  22.31151                     2             73J/07           317.5       2.121320               978700.0                  978777.0                 -15.0                  0.0                -15.0                -15.0         EPSG:4326 Inner join on longitude/latitude rounded to 5 decimal places
+
+===== Running detect_anomalies.py =====
+Isolation Forest complete.
+Feature columns: ['magnetic_anomaly_nt_mean', 'bouguer_anomaly_mean', 'elevation_mean']
+Number of stations: 286
+Flagged outliers: 15
+PCA explained variance: [0.52927349 0.32745488]
+ longitude  latitude  magnetic_anomaly_nt_mean  bouguer_anomaly_mean  elevation_mean  anomaly_score  isolation_forest_label
+  86.31338  22.31687              -1024.340187                   3.0           397.5       0.113398                      -1
+  86.30103  22.29862                829.040017                  -1.0           522.5       0.071373                      -1
+  86.34542  22.29786               -596.435719                   1.0           494.0       0.044110                      -1
+  86.34541  22.29786               -596.435719                   1.0           496.0       0.043968                      -1
+  86.28893  22.44473                143.232827                 -21.5           629.0       0.031553                      -1
+  86.34716  22.28488                841.930631                   1.0           421.0       0.020212                      -1
+  86.31546  22.29598                608.828696                   3.0           471.0       0.014656                      -1
+  86.31546  22.29599                608.828696                   3.0           470.0       0.014251                      -1
+  86.41925  22.35416                816.556484                 -35.0           219.0       0.010669                      -1
+  86.30010  22.42349                 32.157742                 -20.0           598.0       0.007931                      -1
+
+===== Running make_maps.py =====
+Maps saved to figures/ and data/outputs/.
+
+PIPELINE FINISHED. See reports/, data/processed/, data/outputs/ and figures/.
