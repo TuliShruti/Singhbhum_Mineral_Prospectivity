@@ -1,0 +1,9 @@
+metric,value
+Number of copper occurrences,14.0
+Mean nearest anomaly distance (km),19.47587583184116
+Mean nearest normal distance (km),12.514634572611032
+Mean nearest station distance (km),12.514634572611032
+Median nearest anomaly distance (km),18.11294707518686
+Median nearest normal distance (km),11.424430319966937
+Occurrences closer to anomaly,0.0
+Occurrences closer to normal observation,14.0

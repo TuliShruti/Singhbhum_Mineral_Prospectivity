@@ -1,0 +1,8 @@
+metric,value
+Actual anomaly mean distance,19.47587583184116
+Random baseline mean distance,15.651152580658723
+Random baseline median distance,15.44627034834729
+Random baseline 5th percentile,13.933051779744769
+Random baseline 95th percentile,18.03162087533406
+Actual distance percentile,98.5
+Empirical one-sided p-value,0.985001499850015
